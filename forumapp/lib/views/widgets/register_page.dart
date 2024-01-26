@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:forumapp/views/login_page.dart';
 import 'package:forumapp/views/widgets/input_widget.dart';
-import 'package:forumapp/views/widgets/register_page.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -24,7 +26,23 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Login Page', style: GoogleFonts.poppins(fontSize: 30)),
+              Text('Register Page', style: GoogleFonts.poppins(fontSize: 30)),
+              const SizedBox(
+                height: 30,
+              ),
+              InputWidget(
+                hintText: "Name",
+                controller: _nameController,
+                obscureText: false,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              InputWidget(
+                hintText: "Username",
+                controller: _usernameController,
+                obscureText: false,
+              ),
               const SizedBox(
                 height: 30,
               ),
@@ -52,24 +70,18 @@ class _LoginPageState extends State<LoginPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 ),
-                child: Text('Login', style: GoogleFonts.poppins(fontSize: 18)),
+                child:
+                    Text('Register', style: GoogleFonts.poppins(fontSize: 18)),
               ),
               const SizedBox(
                 height: 20,
               ),
               TextButton(
                   onPressed: () {
-                    Get.to(() => const RegisterPage());
+                    Get.to(() => const LoginPage());
                   },
-                  child: Text('Register',
-                      style: GoogleFonts.poppins(fontSize: 22))),
-              const SizedBox(
-                height: 20,
-              ),
-              TextButton(
-                  onPressed: () {},
-                  child: Text('Reset password',
-                      style: GoogleFonts.poppins(fontSize: 22)))
+                  child:
+                      Text('Login', style: GoogleFonts.poppins(fontSize: 22))),
             ],
           ),
         ),
