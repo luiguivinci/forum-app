@@ -38,7 +38,7 @@ class AuthenticationController extends GetxController {
         isLoading.value = false;
         token.value = json.decode(response.body)['token'];
         box.write('token', token.value);
-        debugPrint(response.body);
+        //debugPrint(response.body);
 
         // Muestra un Snackbar de fondo verde indicando éxito
         Get.snackbar(
@@ -70,11 +70,11 @@ class AuthenticationController extends GetxController {
           colorText: Colors.white,
         );
 
-        debugPrint(response.body);
+        //debugPrint(response.body);
       }
     } catch (e) {
       isLoading.value = false;
-      print(e.toString());
+      //print(e.toString());
     }
   }
 

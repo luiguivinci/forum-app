@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:forumapp/controllers/post_controller.dart';
 import 'package:forumapp/models/post_model.dart';
 import 'package:forumapp/views/widgets/post_details.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PostData extends StatelessWidget {
+class PostData extends StatefulWidget {
   const PostData({
     super.key,
     required this.post,
   });
 
   final PostModel post;
+
+  @override
+  State<PostData> createState() => _PostDataState();
+}
+
+class _PostDataState extends State<PostData> {
+  final PostController _postController = Get.put(PostController());
+  Color likedPost = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +34,11 @@ class PostData extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            post.user!.name!,
+            widget.post.user!.name!,
             style: GoogleFonts.poppins(),
           ),
           Text(
-            post.user!.email!,
+            widget.post.user!.email!,
             style: GoogleFonts.poppins(
               fontSize: 10,
             ),
@@ -38,19 +47,25 @@ class PostData extends StatelessWidget {
             height: 10,
           ),
           Text(
-            post.content!,
+            widget.post.content!,
           ),
           Row(
             children: [
               IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.thumb_up),
+                onPressed: () async {
+                  await _postController.likeAndDislike(widget.post.id);
+                  _postController.getAllPosts();
+                },
+                icon: Icon(
+                  Icons.thumb_up,
+                  color: widget.post.liked! ? Colors.blue : Colors.black,
+                ),
               ),
               IconButton(
                 onPressed: () {
                   Get.to(
                     () => PostDetails(
-                      post: post,
+                      post: widget.post,
                     ),
                   );
                 },

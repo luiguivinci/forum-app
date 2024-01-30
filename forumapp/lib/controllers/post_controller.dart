@@ -39,7 +39,7 @@ class PostController extends GetxController {
         }
       } else {
         isLoading.value = false;
-        print(jsonDecode(response.body));
+        //print(jsonDecode(response.body));
       }
     } catch (e) {
       isLoading.value = false;
@@ -63,7 +63,7 @@ class PostController extends GetxController {
       );
 
       if (response.statusCode == 201) {
-        print(json.decode(response.body));
+        //print(json.decode(response.body));
       } else {
         Get.snackbar(
           'Error',
@@ -99,7 +99,7 @@ class PostController extends GetxController {
         }
       } else {
         isLoading.value = false;
-        print(json.decode(response.body));
+        //print(json.decode(response.body));
       }
     } catch (e) {
       print(e.toString());
@@ -124,10 +124,40 @@ class PostController extends GetxController {
 
       if (request.statusCode == 201) {
         isLoading.value = false;
-        print(json.decode(request.body));
+        //print(json.decode(request.body));
       } else {
         isLoading.value = false;
-        print(json.decode(request.body));
+        //print(json.decode(request.body));
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future likeAndDislike(id) async {
+    try {
+      isLoading.value = true;
+      var request = await http.post(
+        Uri.parse('${url}feed/like/$id'),
+        headers: {
+          "Accept": "application/json",
+          "Authorization": 'Bearer ${box.read('token')}',
+        },
+      );
+
+      if (request.statusCode == 200 ||
+          json.decode(request.body)['message'] == 'liked') {
+        isLoading.value = false;
+
+        //print(json.decode(request.body));
+      } else if (request.statusCode == 200 ||
+          json.decode(request.body)['message'] == 'unliked') {
+        isLoading.value = false;
+
+        //print(json.decode(request.body));
+      } else {
+        isLoading.value = false;
+        //print(json.decode(request.body));
       }
     } catch (e) {
       print(e.toString());
