@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forumapp/controllers/authentication.dart';
 import 'package:forumapp/views/widgets/input_widget.dart';
 import 'package:forumapp/views/widgets/register_page.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +15,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +49,25 @@ class _LoginPageState extends State<LoginPage> {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await _authenticationController.login(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   elevation: 0,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 ),
-                child: Text('Login', style: GoogleFonts.poppins(fontSize: 18)),
+                child: Obx(() {
+                  return _authenticationController.isLoading.value
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text('Login', style: GoogleFonts.poppins(fontSize: 18));
+                }),
               ),
               const SizedBox(
                 height: 20,

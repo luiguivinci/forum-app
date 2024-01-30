@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forumapp/views/login_page.dart';
+import 'package:forumapp/views/widgets/home.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() {
@@ -14,7 +15,9 @@ class MyApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Forum App',
-      home: LoginPage(),
+      //TODO:: CAMBIAR A LOGIN PAGE
+      //home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
