@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:forumapp/controllers/post_controller.dart';
 import 'package:forumapp/views/widgets/post_data.dart';
 import 'package:forumapp/views/widgets/post_field.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,7 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _postController = TextEditingController();
+  final PostController _postController = Get.put(PostController());
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               PostField(
                 hintText: 'What do you want to ask?',
-                controller: _postController,
+                controller: _textController,
               ),
               //const SizedBox(
               //  height: 20,
@@ -53,10 +56,23 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 20,
               ),
-              PostData(),
-              PostData(),
-              PostData(),
-              PostData(),
+              Obx(() {
+                return _postController.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : //PostData(),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _postController.posts.value.length,
+                        itemBuilder: (context, index) {
+                          return PostData(
+                            post: _postController.posts.value[index],
+                          );
+                        },
+                      );
+              }),
             ],
           ),
         ),

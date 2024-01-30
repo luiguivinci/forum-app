@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:forumapp/models/post_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PostData extends StatelessWidget {
   const PostData({
     super.key,
+    required this.post,
   });
+
+  final PostModel post;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +23,11 @@ class PostData extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Luigui Vinci',
+            post.user!.name!,
             style: GoogleFonts.poppins(),
           ),
           Text(
-            'luigui@gmail.com',
+            post.user!.email!,
             style: GoogleFonts.poppins(
               fontSize: 10,
             ),
@@ -32,7 +36,7 @@ class PostData extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum Lorem ipsus dolorum ',
+            post.content!,
           ),
           Row(
             children: [
